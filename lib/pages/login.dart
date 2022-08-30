@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -21,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Color primary = const Color.fromARGB(253, 233, 163, 51);
   @override
   Widget build(BuildContext context) {
+    //Check if keyboard is visible,(to prevent overflow)
     final bool isKeyboardVisible =
         KeyboardVisibilityProvider.isKeyboardVisible(context);
     screenWidth = MediaQuery.of(context).size.width;
@@ -29,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
         resizeToAvoidBottomInset: false,
         body: Column(
           children: [
+            //Removes bannner when keyboard is open
             isKeyboardVisible
                 ? SizedBox(
                     height: screenHeight / 20,
@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 bottom: screenHeight / 20,
               ),
               child: Text(
-                'Login',
+                "Login",
                 style: TextStyle(
                   fontSize: screenWidth / 18,
                   fontFamily: "NexaBold",
@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           .where('id', isEqualTo: id)
                           .get();
 
-                      print(snap.docs[0]);
+                      print(snap.docs[0]['id']);
                     },
                     child: Container(
                       height: 60,
