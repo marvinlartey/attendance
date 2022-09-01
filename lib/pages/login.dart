@@ -11,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController idController = TextEditingController();
-  TextEditingController passController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   double screenWidth = 0;
   double screenHeight = 0;
@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     //Check if keyboard is visible,(to prevent overflow)
     final bool isKeyboardVisible =
         KeyboardVisibilityProvider.isKeyboardVisible(context);
+
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -86,8 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     controller: idController,
                     obscure: false,
                   ),
-                  //Employee password text
 
+                  //Employee password text
                   FieldTitle(
                     screenWidth: screenWidth,
                     title: 'Password',
@@ -98,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     primary: primary,
                     screenHeight: screenHeight,
                     hint: 'Enter your password',
-                    controller: passController,
+                    controller: passwordController,
                     obscure: true,
                   ),
 
@@ -106,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   GestureDetector(
                     onTap: () async {
                       String id = idController.text.trim();
-                      String password = passController.text.trim();
+                      String password = passwordController.text.trim();
 
                       QuerySnapshot snap = await FirebaseFirestore.instance
                           .collection('Adimn')
@@ -115,28 +116,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       print(snap.docs[0]['id']);
                     },
-                    child: Container(
-                      height: 60,
-                      width: screenWidth,
-                      margin: EdgeInsets.only(
-                        top: screenHeight / 40,
-                      ),
-                      decoration: BoxDecoration(
-                          color: primary,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(30),
-                          )),
-                      child: Center(
-                        child: Text(
-                          'LOGIN',
-                          style: TextStyle(
-                            fontFamily: 'NexaBold',
-                            fontSize: screenWidth / 26,
-                            color: Colors.white,
-                            letterSpacing: 2,
+                    child: InkWell(
+                      child: Container(
+                        height: 60,
+                        width: screenWidth,
+                        margin: EdgeInsets.only(
+                          top: screenHeight / 40,
+                        ),
+                        decoration: BoxDecoration(
+                            color: primary,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(30),
+                            )),
+                        child: Center(
+                          child: Text(
+                            'LOGIN',
+                            style: TextStyle(
+                              fontFamily: 'NexaBold',
+                              fontSize: screenWidth / 26,
+                              color: Colors.white,
+                              letterSpacing: 2,
+                            ),
                           ),
                         ),
                       ),
+                      onTap: () {},
                     ),
                   )
                 ],
@@ -185,7 +189,7 @@ class CustomField extends StatelessWidget {
 
       //Textfield Row
       child: Row(children: [
-        Container(
+        SizedBox(
           width: screenWidth / 6,
           child: Icon(
             Icons.person,
@@ -215,6 +219,7 @@ class CustomField extends StatelessWidget {
   }
 }
 
+//title
 class FieldTitle extends StatelessWidget {
   const FieldTitle({
     Key? key,

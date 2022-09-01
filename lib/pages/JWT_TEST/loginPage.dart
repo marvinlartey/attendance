@@ -18,26 +18,26 @@ class LoginPage extends StatelessWidget {
                 content: Text(text),
               ));
 
-  Future<String?> attemptLogIn(String username, String id) async {
+  Future<String?> attemptLogIn(String username, String password) async {
     var result = await post(
         Uri.parse(
             "https://expenditure-tracker-backend.thescienceset.com/users"),
         body: {
           'name': username,
-          'id': id,
+          'id': password,
         });
 
     if (result.statusCode == 200) return result.body;
     return null;
   }
 
-  Future<int> attemptSignup(String username, int id) async {
+  Future<int> attemptSignup(String username, String password) async {
     var result = await post(
         Uri.parse(
             "https://expenditure-tracker-backend.thescienceset.com/users"),
         body: {
           'name': username,
-          'id': id,
+          'id': password,
         });
     return result.statusCode;
   }
@@ -70,6 +70,10 @@ class LoginPage extends StatelessWidget {
 
                 var jwt = await attemptLogIn(name, password);
                 if (jwt != null) {
+                  //TODO: DELETE
+                  print(jwt);
+                  //
+
                   storage.write(key: "jwt", value: jwt);
                   Navigator.push(
                       context,
@@ -87,12 +91,12 @@ class LoginPage extends StatelessWidget {
           ElevatedButton(
               onPressed: () async {
                 var name = _usernameController.text;
-                var password = int.parse(_passwordController.text);
+                var password = _passwordController.text;
 
                 if (name.length < 4) {
                   displayDialog(
                       context, "Invalid username", "The username is too short");
-                } else if (password != null) {
+                } else if (password.length < 4) {
                   displayDialog(context, "Invalid Password",
                       "The password should be at least 4 characters long");
                 } else {
@@ -120,7 +124,7 @@ class LoginPage extends StatelessWidget {
 // HOMEPAGE
 
 class HomePage extends StatelessWidget {
-  HomePage(this.jwt, this.payload);
+  const HomePage(this.jwt, this.payload);
 
   factory HomePage.fromBase64(String jwt) => HomePage(
       jwt,
@@ -160,8 +164,9 @@ class HomePage extends StatelessWidget {
   }
 }
 
-
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   Future<String> get jwtOrEmpty async {
     var jwt = await storage.read(key: "jwt");
     if (jwt == null) return "";

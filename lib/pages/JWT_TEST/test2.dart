@@ -2,32 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 
-String? jwt;
+import '../login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  jwt = await prefs.getString("jwt");
-  print('jwt ${jwt}');
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // jwt = await prefs.getString("jwt");
+  // print('jwt ${jwt}');
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    String? jwt = "c";
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: jwt == null ? "login" : "/",
+      initialRoute: jwt == "c" ? "HomePage" : "login",
       routes: {
-        '/': (context) => MyHomePage(
+        "login": (context) => MyHomePage(
               title: "demo",
             ),
-        "login": (context) => LoginScreen(),
+        'HomePage': (context) => MyHomePage(
+              title: "demosss",
+            ),
       },
     );
   }
@@ -55,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(/* widget.title */ 'title'),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Column(
@@ -80,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class LoginScreen extends StatefulWidget {
+/* class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -104,4 +110,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
+} */
