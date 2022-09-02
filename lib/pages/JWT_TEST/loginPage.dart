@@ -21,13 +21,17 @@ class LoginPage extends StatelessWidget {
   Future<String?> attemptLogIn(String username, String password) async {
     var result = await post(
         Uri.parse(
-            "https://expenditure-tracker-backend.thescienceset.com/users"),
+            "http://expenditure-tracker-server.eba-pxkuudy7.eu-west-2.elasticbeanstalk.com/auth/token"),
         body: {
           'name': username,
           'id': password,
         });
 
-    if (result.statusCode == 200) return result.body;
+    if (result.statusCode == 200) {
+      print(result.body);
+      return result.body;
+    }
+    ;
     return null;
   }
 
@@ -71,6 +75,7 @@ class LoginPage extends StatelessWidget {
                 var jwt = await attemptLogIn(name, password);
                 if (jwt != null) {
                   //TODO: DELETE
+                  print('jwt');
                   print(jwt);
                   //
 

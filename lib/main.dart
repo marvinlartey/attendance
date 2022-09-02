@@ -1,3 +1,4 @@
+import 'package:attendance/pages/JWT_TEST/loginPage.dart';
 import 'package:attendance/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -18,8 +19,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const KeyboardVisibilityProvider(
-        child: LoginScreen(),
+      home: KeyboardVisibilityProvider(
+        child: LoginPage(),
       ),
     );
   }
