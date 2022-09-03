@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
@@ -109,12 +109,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       String id = idController.text.trim();
                       String password = passwordController.text.trim();
 
-                      QuerySnapshot snap = await FirebaseFirestore.instance
+                      /* QuerySnapshot snap = await FirebaseFirestore.instance
                           .collection('Adimn')
                           .where('id', isEqualTo: id)
                           .get();
 
-                      print(snap.docs[0]['id']);
+                      print(snap.docs[0]['id']); */
                     },
                     child: InkWell(
                       child: Container(
